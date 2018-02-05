@@ -1,0 +1,90 @@
+"source $VIMRUNTIME/vimrc_example.vim
+"source $VIMRUNTIME/mswin.vim
+"behave mswin
+
+set diffexpr=MyDiff()
+function MyDiff()
+  let opt = '-a --binary '
+  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+  let arg1 = v:fname_in
+  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+  let arg2 = v:fname_new
+  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+  let arg3 = v:fname_out
+  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+  if $VIMRUNTIME =~ ' '
+    if &sh =~ '\<cmd'
+      if empty(&shellxquote)
+        let l:shxq_sav = ''
+        set shellxquote&
+      endif
+      let cmd = '"' . $VIMRUNTIME . '\diff"'
+    else
+      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+    endif
+  else
+    let cmd = $VIMRUNTIME . '\diff'
+  endif
+  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
+  if exists('l:shxq_sav')
+    let &shellxquote=l:shxq_sav
+  endif
+endfunction
+
+syntax on
+"color colorer
+color elflord
+" orange background for hlSearch:
+"hi Search guibg=#ffaa33 guifg=black
+" ping background for hlSearch:
+"hi Search guibg=#ff66ff guifg=black
+" green/cyan background for hlSearch:
+hi Search guibg=#00ffdd guifg=black
+hi Normal guifg=lightgray
+
+au BufRead,BufNewFile MESc.[0-9][0-9][0-9].log set filetype=mesclog
+au! Syntax mesclog source $VIM/vim80/syntax/mesclog.vim
+
+set showcmd         " Show (partial) command in status line.
+set showmatch       " Show matching brackets.
+set ignorecase      " Do case insensitive matching
+set incsearch       " Incremental search
+
+set hlsearch
+set title
+set ruler
+set number
+
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set autoindent
+set cindent
+
+set mouse=n
+
+set wildmode=list:longest
+set wildmenu
+
+set history=200
+
+set diffopt+=iwhite
+
+map <F12> :call SetBgForThisLine("Magenta")
+
+function! SetBgForThisLine(var_color)
+  if !exists("s:call_count")
+    let s:call_count = 0
+  endif
+  let s:call_count = s:call_count + 1
+  echo "called" s:call_count "times"
+
+  let s:line = getline(line("."))
+  let s:line_esc = escape(s:line, '\\/.*$^~[]')
+
+  let s:cmd = ":syn match HiWord".s:call_count." display \"".s:line_esc."\""
+  execute s:cmd
+  let s:cmd = ":hi HiWord".s:call_count." ctermbg=".a:var_color." guibg=".a:var_color
+  execute s:cmd
+endfunction
