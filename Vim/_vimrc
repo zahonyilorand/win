@@ -51,6 +51,8 @@ set showmatch       " Show matching brackets.
 set ignorecase      " Do case insensitive matching
 set incsearch       " Incremental search
 
+set backspace=indent,eol,start
+
 set hlsearch
 set title
 set ruler
@@ -71,7 +73,11 @@ set history=200
 
 set diffopt+=iwhite
 
+" key mapping:
+
 map <F12> :call SetBgForThisLine("Magenta")
+
+" function definitions:
 
 function! SetBgForThisLine(var_color)
   if !exists("s:call_count")
