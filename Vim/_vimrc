@@ -33,15 +33,7 @@ function MyDiff()
 endfunction
 
 syntax on
-"color colorer
-color elflord
-" orange background for hlSearch:
-"hi Search guibg=#ffaa33 guifg=black
-" ping background for hlSearch:
-"hi Search guibg=#ff66ff guifg=black
-" green/cyan background for hlSearch:
-hi Search guibg=#00ffdd guifg=black
-hi Normal guifg=lightgray
+color pablo
 
 au BufRead,BufNewFile MESc.[0-9][0-9][0-9].log set filetype=mesclog
 au! Syntax mesclog source $VIM/vim80/syntax/mesclog.vim

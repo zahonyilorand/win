@@ -45,12 +45,23 @@ map <F9> :call search(g:MEScStarted_pattern, "b")
 map <F10> :call search(g:MEScStarted_pattern)
 
 "set mouse=n
-"set foldmethod=indent
-"set foldcolumn=3
+set foldmethod=marker
+set foldmarker=MESc\ GUI\ started.,MESc\ Qt\ GUI\ exited
+set foldcolumn=4
+set foldlevel=1000
 
 let b:current_syntax = "mesclog"
 
 "hi clear
+
+color elflord
+" orange background for hlSearch:
+"hi Search guibg=#ffaa33 guifg=black
+" ping background for hlSearch:
+"hi Search guibg=#ff66ff guifg=black
+" green/cyan background for hlSearch:
+hi Search guibg=#00ffdd guifg=black
+hi Normal guifg=lightgray
 
 "set background=dark
 
