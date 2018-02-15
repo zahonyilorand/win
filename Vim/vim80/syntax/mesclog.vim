@@ -1,6 +1,9 @@
 " Vim syntax file for MESc log files
 
 let g:MEScStarted_pattern = "MESc GUI started\..*"
+let g:MeasStarted_pattern = "sigMeasureRunning()"
+let g:MeasFinished_pattern = "sigMeasureDone()"
+let g:mesc_fold_level = '0'
 
 syn match		LogRow				display "^[ \t]*<[ 0-9\.\:\-]*>[ \t]\[[A-Z]*\][ \t]<[a-zA-Z0-9]*>[ \t].*" contains=LogTime,@LogType,MEScProject,MEScClassText,MEScStarted,MescSettings,MEScFinished,MEScMeasStarted,MEScMeasFinished,MEScTextHexNumber,MEScTextNumber
 syn match		LogTime				display contained "^[ \t]*<[ 0-9\.\:\-]*>" nextgroup=LogType
@@ -45,10 +48,35 @@ map <F9> :call search(g:MEScStarted_pattern, "b")
 map <F10> :call search(g:MEScStarted_pattern)
 
 "set mouse=n
-set foldmethod=marker
-set foldmarker=MESc\ GUI\ started.,MESc\ Qt\ GUI\ exited
+"set foldmethod=marker
+"set foldmarker=MESc\ GUI\ started.,MESc\ Qt\ GUI\ exited
+"set foldmethod=expr
+set foldexpr=MEScFoldLevel(v:lnum)
 set foldcolumn=4
-set foldlevel=1000
+"set foldlevel=1000
+
+function! MEScFoldLevel(lnum)
+    let current_line = getline(a:lnum)
+    let next_line = getline(a:lnum + 1)
+
+    if current_line =~ g:MEScStarted_pattern
+        let g:mesc_fold_level = '>1'
+    elseif g:mesc_fold_level != '0'
+        if next_line =~ g:MEScStarted_pattern
+            let g:mesc_fold_level = '<1'
+        else
+            if current_line =~ g:MeasStarted_pattern
+                let g:mesc_fold_level = '>2'
+            elseif current_line =~ g:MeasFinished_pattern
+                let g:mesc_fold_level = '<2'
+            else
+                let g:mesc_fold_level = '='
+            endif
+        endif
+    endif
+
+    return g:mesc_fold_level
+endfunction
 
 let b:current_syntax = "mesclog"
 
@@ -87,3 +115,5 @@ hi MEScMeasStarted								guifg=#000000				guibg=#00ff00
 hi MEScMeasFinished								guifg=#000000				guibg=#008800
 hi MEScTextHexNumber							guifg=#ff00ff
 hi MEScTextNumber								guifg=#ff00ff
+hi FoldColumn                                   guifg=cyan                  guibg=black
+hi Folded                                       guifg=cyan                  guibg=darkgrey
