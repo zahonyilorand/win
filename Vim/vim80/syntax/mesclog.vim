@@ -3,7 +3,7 @@
 let g:MEScStarted_pattern = "MESc GUI started\..*"
 let g:MeasStarted_pattern = "sigMeasureRunning()"
 let g:MeasFinished_pattern = "sigMeasureDone()"
-let g:mesc_fold_level = '0'
+let g:mesc_fold_level = "0"
 
 syn match		LogRow				display "^[ \t]*<[ 0-9\.\:\-]*>[ \t]\[[A-Z]*\][ \t]<[a-zA-Z0-9]*>[ \t].*" contains=LogTime,@LogType,MEScProject,MEScClassText,MEScStarted,MescSettings,MEScFinished,MEScMeasStarted,MEScMeasFinished,MEScTextHexNumber,MEScTextNumber
 syn match		LogTime				display contained "^[ \t]*<[ 0-9\.\:\-]*>" nextgroup=LogType
@@ -60,17 +60,17 @@ function! MEScFoldLevel(lnum)
     let next_line = getline(a:lnum + 1)
 
     if current_line =~ g:MEScStarted_pattern
-        let g:mesc_fold_level = '>1'
-    elseif g:mesc_fold_level != '0'
+        let g:mesc_fold_level = ">1"
+    elseif g:mesc_fold_level != "0"
         if next_line =~ g:MEScStarted_pattern
-            let g:mesc_fold_level = '<1'
+            let g:mesc_fold_level = "<1"
         else
             if current_line =~ g:MeasStarted_pattern
-                let g:mesc_fold_level = '>2'
+                let g:mesc_fold_level = "a1"
             elseif current_line =~ g:MeasFinished_pattern
-                let g:mesc_fold_level = '<2'
+                let g:mesc_fold_level = "s1"
             else
-                let g:mesc_fold_level = '='
+                let g:mesc_fold_level = "="
             endif
         endif
     endif
