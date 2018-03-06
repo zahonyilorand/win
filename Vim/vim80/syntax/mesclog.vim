@@ -16,8 +16,8 @@ syn match		LogWarning			display contained "[ \t]\[WARNING\][ \t]"hs=e-9,he=e-1 n
 syn match		LogError			display contained "[ \t]\[ERROR\][ \t]"hs=e-7,he=e-1 nextgroup=MEScProject
 syn match		LogFatal			display contained "[ \t]\[FATAL\][ \t]"hs=e-7,he=e-1 nextgroup=MEScProject
 syn match		MEScProject			display contained "<[a-zA-Z0-9]*>[ \t]" nextgroup=MEScClassText
-syn match		MEScClassText		display contained "[a-zA-Z0-9]*::[^:]*():.*" contains=MEScClass,MEScFunc,MEScTextHexNumber,MEScTextNumber
-syn match		MEScClass			display contained "[a-zA-Z0-9]*::" nextgroup=MEScFunc
+syn match		MEScClassText		display contained "[a-zA-Z0-9:]*::[^:]*():.*" contains=MEScClass,MEScFunc,MEScTextHexNumber,MEScTextNumber
+syn match		MEScClass			display contained "[a-zA-Z0-9:]*::" nextgroup=MEScFunc
 syn match		MEScFunc			display contained "[^:]*():"he=e-1
 syn match		MEScStarted			display contained "MESc GUI started\..*"
 "syn match		MEScStarted			display contained "$(g:MEScStarted_pattern)"
