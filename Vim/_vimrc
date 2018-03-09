@@ -71,6 +71,8 @@ set diffopt+=iwhite
 " key mapping:
 
 map <F12> :call SetBgForThisLine("Magenta")
+map <M-Left> <C-O>
+map <M-Right> <C-I>
 
 " function definitions:
 
@@ -89,3 +91,4 @@ function! SetBgForThisLine(var_color)
   let s:cmd = ":hi HiWord".s:call_count." ctermbg=".a:var_color." guibg=".a:var_color
   execute s:cmd
 endfunction
+
