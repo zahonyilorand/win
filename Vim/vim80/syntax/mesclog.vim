@@ -44,6 +44,7 @@ function! SearchMEScStart()
     execute "n"
 endfunction
 
+
 map <F9> :call search(g:MEScStarted_pattern, "b")
 map <F10> :call search(g:MEScStarted_pattern)
 
