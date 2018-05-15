@@ -73,6 +73,7 @@ set diffopt+=iwhite
 map <F12> :call SetBgForThisLine("Magenta")
 map <M-Left> <C-O>
 map <M-Right> <C-I>
+map <C-H> :browse oldfiles
 
 " function definitions:
 
