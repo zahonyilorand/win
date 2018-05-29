@@ -117,4 +117,4 @@ hi MEScTextHexNumber							guifg=#ff00ff
 hi MEScTextNumber								guifg=#ff00ff
 hi FoldColumn                                   guifg=cyan                  guibg=black
 hi Folded                                       guifg=cyan                  guibg=darkgrey
-hi Visual                                       guifg=cyan                  guibg=#777777
+hi Visual                                                                   guibg=#777777
