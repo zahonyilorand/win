@@ -38,14 +38,45 @@ syn match		MEScTextNumber  	display contained "[-]\?[0-9]\.[0-9]\+[eE][+-][0-9]\
 "  set foldcolumn=6
 "endfunction
 
-function! SearchMEScStart()
-    let @/=g:MEScStarted_pattern
-    let l:search_cmd="n"
-    execute "n"
+function! SearchMEScStart(...)
+    if a:0 > 0
+        if a:1 == "b"
+            execute "normal ?" . g:MEScStarted_pattern . ""
+        endif
+    else 
+        execute "normal /" . g:MEScStarted_pattern . ""
+    endif
 endfunction
 
-map <F9> :call search(g:MEScStarted_pattern, "b")
-map <F10> :call search(g:MEScStarted_pattern)
+function! SearchStartOfDay(...)
+    let current_line_number = line('.')
+
+    if a:0 > 0
+        if a:1 == "b"
+            if current_line_number == 1
+                return
+            endif
+
+            let prev_line = getline(current_line_number - 1)
+            let prev_day = strpart(prev_line, 1, 10)
+
+            normal gg
+            execute "normal /" . prev_day . "/s-1"
+        endif
+    else
+        let this_line = getline(current_line_number)
+        let this_day = strpart(this_line, 1, 10)
+
+        normal G
+
+        execute "normal ?" . this_day . "?+1"
+    endif
+endfunction
+
+map <F9> :call SearchMEScStart("b")
+map <F10> :call SearchMEScStart()
+map <C-F9> :call SearchStartOfDay("b")
+map <C-F10> :call SearchStartOfDay()
 
 "set mouse=n
 "set foldmethod=marker
