@@ -42,9 +42,11 @@ function! SearchMEScStart(...)
     if a:0 > 0
         if a:1 == "b"
             execute "normal ?" . g:MEScStarted_pattern . ""
+            call histdel("search", -1)
         endif
     else 
         execute "normal /" . g:MEScStarted_pattern . ""
+        call histdel("search", -1)
     endif
 endfunction
 
@@ -62,6 +64,7 @@ function! SearchStartOfDay(...)
 
             normal gg
             execute "normal /" . prev_day . "/s-1"
+            call histdel("search", -1)
         endif
     else
         let this_line = getline(current_line_number)
@@ -70,6 +73,7 @@ function! SearchStartOfDay(...)
         normal G
 
         execute "normal ?" . this_day . "?+1"
+        call histdel("search", -1)
     endif
 endfunction
 
