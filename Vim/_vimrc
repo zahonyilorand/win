@@ -70,7 +70,7 @@ set diffopt+=iwhite
 
 " key mapping:
 
-map <F12> :call SetBgForThisLine("Magenta")
+map <F12> :call SetBgForThisLineNumber("Magenta")
 map <M-Left> <C-O>
 map <M-Right> <C-I>
 map <C-H> :browse oldfiles
@@ -91,5 +91,12 @@ function! SetBgForThisLine(var_color)
   execute s:cmd
   let s:cmd = ":hi HiWord".s:call_count." ctermbg=".a:var_color." guibg=".a:var_color
   execute s:cmd
+endfunction
+
+function! SetBgForThisLineNumber(var_color)
+  let current_line_number = line('.')
+
+  execute "hi MyHi1234 guibg=" . a:var_color
+  execute "match MyHi1234 /\\%" . current_line_number . "l/"
 endfunction
 
