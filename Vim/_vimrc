@@ -97,6 +97,6 @@ function! SetBgForThisLineNumber(var_color)
   let current_line_number = line('.')
 
   execute "hi MyHi1234 guibg=" . a:var_color
-  execute "match MyHi1234 /\\%" . current_line_number . "l/"
+  execute "call matchaddpos(\"MyHi1234\", [" . current_line_number . "])"
 endfunction
 
