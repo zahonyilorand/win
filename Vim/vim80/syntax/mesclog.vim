@@ -132,7 +132,7 @@ hi LogTime				ctermfg=Gray			guifg=#aaaaaa
 
 hi LogTrace				ctermfg=Black			guifg=#aaaaaa
 hi LogDebug				ctermfg=Black			guifg=#555555
-hi LogInfo				ctermfg=Black			guifg=#555555
+hi LogInfo				ctermfg=Black			guifg=#ffffff
 hi LogTitle				ctermfg=Green			guifg=#11aa11
 hi LogWarning			ctermfg=Yellow			guifg=#eeaa00
 hi LogError				ctermfg=Red				guifg=#ff0000
