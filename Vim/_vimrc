@@ -40,6 +40,8 @@ color pablo
 
 au BufRead,BufNewFile MESc.[0-9][0-9][0-9].log set filetype=mesclog
 au! Syntax mesclog source $VIM/vim80/syntax/mesclog.vim
+au BufRead,BufNewFile femtoCamera.log set filetype=femtocameralog
+au! Syntax femtocameralog source $VIM/vim80/syntax/femtocameralog.vim
 
 set showcmd         " Show (partial) command in status line.
 set showmatch       " Show matching brackets.
