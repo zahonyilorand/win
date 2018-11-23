@@ -117,7 +117,7 @@ let b:current_syntax = "mesclog"
 
 "hi clear
 
-color elflord
+"color elflord
 " orange background for hlSearch:
 "hi Search guibg=#ffaa33 guifg=black
 " ping background for hlSearch:
