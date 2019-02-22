@@ -4,6 +4,8 @@ let g:MEScStarted_pattern = "MESc GUI started\..*"
 let g:MeasStarted_pattern = "sigMeasureRunning()"
 let g:MeasFinished_pattern = "sigMeasureDone()"
 let g:mesc_fold_level = "0"
+let g:orig_pos_list = getpos('.')
+let g:orig_window_last_line_number = line('w$')
 
 syn match		LogRow				display "^[ \t]*<[ 0-9\.\:\-]*>[ \t]\[[A-Z]*\][ \t]<[a-zA-Z0-9]*>[ \t].*" contains=LogTime,@LogType,MEScProject,MEScClassText,MEScStarted,MescSettings,MEScFinished,MEScMeasStarted,MEScMeasFinished,MEScTextHexNumber,MEScTextNumber
 syn match		LogTime				display contained "^[ \t]*<[ 0-9\.\:\-]*>" nextgroup=LogType
@@ -39,15 +41,93 @@ syn match		MEScTextNumber  	display contained "[-]\?[0-9]\.[0-9]\+[eE][+-][0-9]\
 "endfunction
 
 function! SearchMEScStart(...)
+    set nowrapscan
+
     if a:0 > 0
         if a:1 == "b"
-            execute "normal ?" . g:MEScStarted_pattern . ""
+            silent! execute "normal ?" . g:MEScStarted_pattern . ""
             call histdel("search", -1)
         endif
     else 
-        execute "normal /" . g:MEScStarted_pattern . ""
+        silent! execute "normal /" . g:MEScStarted_pattern . ""
         call histdel("search", -1)
     endif
+
+    set wrapscan
+endfunction
+
+function! SearchMeasurementStart(...)
+    set nowrapscan
+
+    if a:0 > 0
+        if a:1 == "b"
+            silent! execute "normal ?" . g:MeasStarted_pattern . ""
+            call histdel("search", -1)
+        endif
+    else 
+        silent! execute "normal /" . g:MeasStarted_pattern . ""
+        call histdel("search", -1)
+    endif
+
+    set wrapscan
+endfunction
+
+function! SearchMeasurementStartInThisMESc(...)
+    set nowrapscan
+
+    let a:orig_pos_list = getpos('.')
+    let window_first_line_number = line('w0')
+    let window_last_line_number = line('w$')
+
+    if a:0 > 0
+        if a:1 == "b"
+            silent! execute "normal ?" . g:MEScStarted_pattern . ""
+            let a:mesc_start_line_number = line('.')
+            call histdel("search", -1)
+
+            call cursor(a:orig_pos_list[1], a:orig_pos_list[2])
+
+            silent! execute "normal ?" . g:MeasStarted_pattern . ""
+            let a:meas_start_pos_list = getpos('.')
+            call histdel("search", -1)
+
+            execute "normal ".window_last_line_number."G"
+            execute "normal zb"
+
+            if a:mesc_start_line_number < a:meas_start_pos_list[1]
+                call cursor(a:meas_start_pos_list[1], a:meas_start_pos_list[2])
+            else
+                call cursor(a:orig_pos_list[1], a:orig_pos_list[2])
+            endif
+        endif
+    else 
+"        silent! execute "normal /" . g:MeasStarted_pattern . ""
+"        call histdel("search", -1)
+        silent! execute "normal /" . g:MEScStarted_pattern . ""
+        let a:next_mesc_start_line_number = line('.')
+        call histdel("search", -1)
+
+        call cursor(a:orig_pos_list[1], a:orig_pos_list[2])
+
+        if a:next_mesc_start_line_number == a:orig_pos_list[1]
+            let a:next_mesc_start_line_number = line('$') + 1
+        endif
+
+        silent! execute "normal /" . g:MeasStarted_pattern . ""
+        let a:next_meas_start_pos_list = getpos('.')
+        call histdel("search", -1)
+
+        execute "normal ".window_last_line_number."G"
+        execute "normal zb"
+
+        if a:next_mesc_start_line_number > a:next_meas_start_pos_list[1]
+            call cursor(a:next_meas_start_pos_list[1], a:next_meas_start_pos_list[2])
+        else
+            call cursor(a:orig_pos_list[1], a:orig_pos_list[2])
+        endif
+    endif
+
+    set wrapscan
 endfunction
 
 function! SearchStartOfDay(...)
@@ -78,9 +158,11 @@ function! SearchStartOfDay(...)
 endfunction
 
 map <F9> :call SearchMEScStart("b")
-map <F10> :call SearchMEScStart()
-map <C-F9> :call SearchStartOfDay("b")
-map <C-F10> :call SearchStartOfDay()
+map <S-F9> :call SearchMEScStart()
+map <F10> :call SearchMeasurementStartInThisMESc("b")
+map <S-F10> :call SearchMeasurementStartInThisMESc()
+map <C-A-F9> :call SearchStartOfDay("b")
+map <C-S-A-F9> :call SearchStartOfDay()
 
 "set mouse=n
 "set foldmethod=marker
@@ -88,10 +170,22 @@ map <C-F10> :call SearchStartOfDay()
 "set foldmethod=expr
 set foldexpr=MEScFoldLevel(v:lnum)
 set foldcolumn=4
-"set foldlevel=1000
+set foldlevel=10
+
+execute "normal G"
+call SearchStartOfDay("b")
+let g:lnum_last_day_start = line('.')
+"execute "normal ".g:orig_window_last_line_number."G"
+"execute "normal zb"
+call cursor(g:orig_pos_list[1], g:orig_pos_list[2])
 
 function! MEScFoldLevel(lnum)
     let current_line = getline(a:lnum)
+
+    if a:lnum < g:lnum_last_day_start
+        return g:mesc_fold_level
+    endif
+
     let next_line = getline(a:lnum + 1)
 
     if current_line =~ g:MEScStarted_pattern
@@ -127,6 +221,9 @@ hi Search guibg=#00ffdd guifg=black
 hi Normal guifg=lightgray
 
 "set background=dark
+
+set cursorline
+hi CursorLine									gui=underline				guibg=NONE
 
 hi LogTime				ctermfg=Gray			guifg=#aaaaaa
 

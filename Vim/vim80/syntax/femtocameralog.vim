@@ -71,9 +71,9 @@ function! SearchStartOfDay(...)
 endfunction
 
 map <F9> :call SearchCameraStart("b")
-map <F10> :call SearchCameraStart()
-map <C-F9> :call SearchStartOfDay("b")
-map <C-F10> :call SearchStartOfDay()
+map <S-F9> :call SearchCameraStart()
+map <C-A-F9> :call SearchStartOfDay("b")
+map <C-S-A-F9> :call SearchStartOfDay()
 
 "set mouse=n
 "set foldmethod=marker

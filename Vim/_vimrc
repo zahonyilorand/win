@@ -47,6 +47,7 @@ set showcmd         " Show (partial) command in status line.
 set showmatch       " Show matching brackets.
 set ignorecase      " Do case insensitive matching
 set incsearch       " Incremental search
+set wrapscan        " Searches wrap around the end of the file
 
 set backspace=indent,eol,start
 
@@ -72,7 +73,7 @@ set diffopt+=iwhite
 
 " key mapping:
 
-map <F12> :call SetBgForThisLineNumber("Magenta")
+map <F12> :call SetBgForThisLineNumber("DarkMagenta")
 map <S-F12> :call ClearBgForAllLineNumbers()
 map <M-Left> <C-O>
 map <M-Right> <C-I>
