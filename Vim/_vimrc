@@ -2,6 +2,9 @@
 "source $VIMRUNTIME/mswin.vim
 "behave mswin
 
+" For viminfo ( = $HOMEDRIVE$HOMEPATH) if HOME is not set correctly:
+"let $HOME=$USERPROFILE
+
 set langmenu=en_US
 let $LANG = 'en_US'
 
