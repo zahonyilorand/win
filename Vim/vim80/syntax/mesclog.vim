@@ -7,7 +7,7 @@ let g:mesc_fold_level = "0"
 let g:orig_pos_list = getpos('.')
 let g:orig_window_last_line_number = line('w$')
 
-syn match		LogRow				display "^[ \t]*<[ 0-9\.\:\-]*>[ \t]\[[A-Z]*\][ \t]<[a-zA-Z0-9]*>[ \t].*" contains=LogTime,@LogType,MEScProject,MEScClassText,MEScStarted,MescSettings,MEScFinished,MEScMeasStarted,MEScMeasFinished,MEScTextHexNumber,MEScTextNumber
+syn match		LogRow				display "^[ \t]*<[ 0-9\.\:\-]*>[ \t]\[[A-Z]*\][ \t]<[a-zA-Z0-9]*>[ \t].*" contains=LogTime,@LogType,MEScProject,MEScClassText,MEScStarted,MEScSettings,MEScFinished,MEScIni,MEScMeasStarted,MEScMeasFinished,MEScTextHexNumber,MEScTextNumber
 syn match		LogTime				display contained "^[ \t]*<[ 0-9\.\:\-]*>" nextgroup=LogType
 syn cluster		LogType				contains=LogTrace,LogDebug,LogInfo,LogTitle,LogWarning,LogError,LogFatal
 syn match		LogTrace			display contained "[ \t]\[TRACE\][ \t]"hs=e-7,he=e-1 nextgroup=MEScProject
@@ -18,12 +18,14 @@ syn match		LogWarning			display contained "[ \t]\[WARNING\][ \t]"hs=e-9,he=e-1 n
 syn match		LogError			display contained "[ \t]\[ERROR\][ \t]"hs=e-7,he=e-1 nextgroup=MEScProject
 syn match		LogFatal			display contained "[ \t]\[FATAL\][ \t]"hs=e-7,he=e-1 nextgroup=MEScProject
 syn match		MEScProject			display contained "<[a-zA-Z0-9]*>[ \t]" nextgroup=MEScClassText
-syn match		MEScClassText		display contained "[a-zA-Z0-9:]*::[^:]*():.*" contains=MEScClass,MEScFunc,MEScTextHexNumber,MEScTextNumber
+syn match		MEScClassText		display contained "[a-zA-Z0-9:]*::[^:]*():.*" contains=MEScClass,MEScFunc,MEScNIRate,MEScTextHexNumber,MEScTextNumber
 syn match		MEScClass			display contained "[a-zA-Z0-9:]*::" nextgroup=MEScFunc
 syn match		MEScFunc			display contained "[^:]*():"he=e-1
 syn match		MEScStarted			display contained "MESc GUI started\..*"
 "syn match		MEScStarted			display contained "$(g:MEScStarted_pattern)"
 syn match		MEScSettings		display contained "using settings from:.*"
+syn match		MEScIni     		display contained "[Rr]eading configuration from .*"
+syn match		MEScNIRate     		display contained "NI card started at rate .*"
 syn match		MEScFinished		display contained "MESc Qt GUI exited.*"
 syn match		MEScMeasStarted		display contained "sigMeasureRunning()"
 syn match		MEScMeasFinished	display contained "sigMeasureDone()"
@@ -241,8 +243,10 @@ hi MEScClass			ctermfg=Brown			guifg=#0055cc
 hi MEScFunc				ctermfg=Brown			guifg=#1a90ff
 
 hi MEScStarted									guifg=#000000				guibg=#ffff00
-hi MEScSettings									guifg=#000000				guibg=#ffff00
-hi MEScFinished									guifg=#000000				guibg=#aaaa00
+hi MEScSettings									guifg=#000000				guibg=#999900
+hi MEScIni     									guifg=#000000				guibg=#999900
+hi MEScNIRate  									guifg=#000000				guibg=#999900
+hi MEScFinished									guifg=#000000				guibg=#444400
 hi MEScMeasStarted								guifg=#000000				guibg=#00ff00
 hi MEScMeasFinished								guifg=#000000				guibg=#008800
 hi MEScTextHexNumber							guifg=#ff00ff
