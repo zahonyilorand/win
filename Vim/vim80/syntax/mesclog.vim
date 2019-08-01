@@ -246,7 +246,7 @@ hi MEScStarted									guifg=#000000				guibg=#ffff00
 hi MEScSettings									guifg=#000000				guibg=#999900
 hi MEScIni     									guifg=#000000				guibg=#999900
 hi MEScNIRate  									guifg=#000000				guibg=#999900
-hi MEScFinished									guifg=#000000				guibg=#444400
+hi MEScFinished									guifg=#000000				guibg=#665500
 hi MEScMeasStarted								guifg=#000000				guibg=#00ff00
 hi MEScMeasFinished								guifg=#000000				guibg=#008800
 hi MEScTextHexNumber							guifg=#ff00ff
