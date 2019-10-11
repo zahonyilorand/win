@@ -2,12 +2,13 @@
 
 let g:MEScStarted_pattern = "MESc GUI started\..*"
 let g:MeasStarted_pattern = "sigMeasureRunning()"
+let g:MeasStarted2_pattern = "sigTestPatternRunning()"
 let g:MeasFinished_pattern = "sigMeasureDone()"
 let g:mesc_fold_level = "0"
 let g:orig_pos_list = getpos('.')
 let g:orig_window_last_line_number = line('w$')
 
-syn match		LogRow				display "^[ \t]*<[ 0-9\.\:\-]*>[ \t]\[[A-Z]*\][ \t]<[a-zA-Z0-9]*>[ \t].*" contains=LogTime,@LogType,MEScProject,MEScClassText,MEScStarted,MEScSettings,MEScFinished,MEScIni,MEScMeasStarted,MEScMeasFinished,MEScTextHexNumber,MEScTextNumber
+syn match		LogRow				display "^[ \t]*<[ 0-9\.\:\-]*>[ \t]\[[A-Z]*\][ \t]<[a-zA-Z0-9]*>[ \t].*" contains=LogTime,@LogType,MEScProject,MEScClassText,MEScStarted,MEScSettings,MEScFinished,MEScIni,MEScMeasStarted,MEScMeasStarted2,MEScMeasFinished,MEScTextHexNumber,MEScTextNumber
 syn match		LogTime				display contained "^[ \t]*<[ 0-9\.\:\-]*>" nextgroup=LogType
 syn cluster		LogType				contains=LogTrace,LogDebug,LogInfo,LogTitle,LogWarning,LogError,LogFatal
 syn match		LogTrace			display contained "[ \t]\[TRACE\][ \t]"hs=e-7,he=e-1 nextgroup=MEScProject
@@ -28,6 +29,7 @@ syn match		MEScIni     		display contained "[Rr]eading configuration from .*"
 syn match		MEScNIRate     		display contained "NI card started at rate .*"
 syn match		MEScFinished		display contained "MESc Qt GUI exited.*"
 syn match		MEScMeasStarted		display contained "sigMeasureRunning()"
+syn match		MEScMeasStarted2	display contained "sigTestPatternRunning()"
 syn match		MEScMeasFinished	display contained "sigMeasureDone()"
 syn match		MEScTextHexNumber  	display contained "\<0[xX][0-9a-fA-F]\+\>"
 syn match		MEScTextNumber  	display contained "[-]\?[0-9]\.[0-9]\+[eE][+-][0-9]\+\|[-]\?\<[0-9][\.0-9]*\>"
@@ -248,6 +250,7 @@ hi MEScIni     									guifg=#000000				guibg=#999900
 hi MEScNIRate  									guifg=#000000				guibg=#999900
 hi MEScFinished									guifg=#000000				guibg=#665500
 hi MEScMeasStarted								guifg=#000000				guibg=#00ff00
+hi MEScMeasStarted2								guifg=#000000				guibg=#00ff00
 hi MEScMeasFinished								guifg=#000000				guibg=#008800
 hi MEScTextHexNumber							guifg=#ff00ff
 hi MEScTextNumber								guifg=#ff00ff
