@@ -42,10 +42,13 @@ syntax on
 color pablo
 
 au BufRead,BufNewFile MESc.[0-9][0-9][0-9].log set filetype=mesclog
+au BufRead,BufNewFile MESc.202[0-9]-[01][0-9].[0-9][0-9][0-9].log set filetype=mesclog
 au! Syntax mesclog source $VIMRUNTIME/syntax/mesclog.vim
 au BufRead,BufNewFile femtoCamera.log set filetype=femtocameralog
 au! Syntax femtocameralog source $VIMRUNTIME/syntax/femtocameralog.vim
 
+set laststatus=2
+set statusline=%F\ %h%w%m%r\ %=%(%l,%c%V\ %=\ %P%)
 set showcmd         " Show (partial) command in status line.
 set showmatch       " Show matching brackets.
 set ignorecase      " Do case insensitive matching
