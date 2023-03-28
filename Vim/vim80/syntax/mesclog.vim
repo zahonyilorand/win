@@ -22,7 +22,7 @@ syn match		MEScProject			display contained "<[a-zA-Z0-9]*>[ \t]" nextgroup=MEScC
 syn match		MEScClassText		display contained "[a-zA-Z0-9:]*::[^:]*():.*" contains=MEScClass,MEScFunc,MEScNIRate,MEScTextHexNumber,MEScTextNumber
 syn match		MEScClass			display contained "[a-zA-Z0-9:]*::" nextgroup=MEScFunc
 syn match		MEScFunc			display contained "[^:]*():"he=e-1
-syn match		MEScStarted			display contained "MESc GUI started\..*"
+syn match		MEScStarted			display contained "MESc GUI[\ \.0-9]* started\..*"
 "syn match		MEScStarted			display contained "$(g:MEScStarted_pattern)"
 syn match		MEScSettings		display contained "using settings from:.*"
 syn match		MEScIni     		display contained "[Rr]eading configuration from .*"
