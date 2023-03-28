@@ -44,6 +44,7 @@ color pablo
 au BufRead,BufNewFile MESc.[0-9][0-9][0-9].log set filetype=mesclog
 au BufRead,BufNewFile MESc.202[0-9]-[01][0-9].[0-9][0-9][0-9].log set filetype=mesclog
 au! Syntax mesclog source $VIMRUNTIME/syntax/mesclog.vim
+au! Syntax kpm2log source $VIMRUNTIME/syntax/kpm2log.vim
 au BufRead,BufNewFile femtoCamera.log set filetype=femtocameralog
 au! Syntax femtocameralog source $VIMRUNTIME/syntax/femtocameralog.vim
 
