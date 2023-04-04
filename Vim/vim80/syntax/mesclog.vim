@@ -1,6 +1,6 @@
 " Vim syntax file for MESc log files
 
-let g:MEScStarted_pattern = "MESc GUI started\..*"
+let g:MEScStarted_pattern = "MESc GUI[\ \.0-9]* started\..*"
 let g:MeasStarted_pattern = "sigMeasureRunning()"
 let g:MeasStarted2_pattern = "sigTestPatternRunning()"
 let g:MeasFinished_pattern = "sigMeasureDone()"
